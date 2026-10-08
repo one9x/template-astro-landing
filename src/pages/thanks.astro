@@ -1,0 +1,20 @@
+---
+// Where a successful waitlist post lands: the form's hidden `_next` field
+// points here. Without it, One9x shows its own plain "Thanks" page instead.
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../site';
+---
+
+<Layout title="You're on the list" description={`You're on the ${SITE.name} waitlist.`}>
+  <div class="container">
+    <div class="prose">
+      <p class="eyebrow">Waitlist</p>
+      <h1>You're on the list.</h1>
+      <p>
+        Thanks for joining. We'll send one email when your invite is ready — nothing
+        before that, and nothing else.
+      </p>
+      <p class="actions"><a class="btn btn-ghost" href="/">Back to the home page</a></p>
+    </div>
+  </div>
+</Layout>

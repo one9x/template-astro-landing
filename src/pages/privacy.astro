@@ -1,0 +1,42 @@
+---
+// A starting point, not legal advice. It describes what THIS template does —
+// one email field, stored by the host's form service — and nothing more. Add
+// to it the moment your site collects anything else.
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../site';
+---
+
+<Layout title="Privacy" description={`What ${SITE.name} collects and why.`}>
+  <div class="container">
+    <article class="prose">
+      <p class="eyebrow">Placeholder — edit before launch</p>
+      <h1>Privacy</h1>
+      <p>
+        This page describes what the {SITE.name} waitlist collects. It is written for the
+        template as shipped; if you add fields, analytics or anything else, say so here.
+      </p>
+
+      <h2>What we collect</h2>
+      <p>
+        Your email address, when you join the waitlist — and nothing else. There are no
+        cookies, no analytics and no third-party scripts on this site.
+      </p>
+
+      <h2>Why</h2>
+      <p>To send you one email when your invite is ready. We do not share or sell it.</p>
+
+      <h2>Where it is stored</h2>
+      <p>
+        Waitlist sign-ups are stored by our host's form service and read only by us. The
+        spam check runs in your browser and is served from this site; no third party sees
+        your visit.
+      </p>
+
+      <h2>Leaving the list</h2>
+      <p>
+        Reply to any email from us, or write to{' '}
+        <a href="mailto:hello@example.com">hello@example.com</a>, and your address is deleted.
+      </p>
+    </article>
+  </div>
+</Layout>

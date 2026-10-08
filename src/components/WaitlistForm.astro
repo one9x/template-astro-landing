@@ -1,0 +1,98 @@
+---
+// The waitlist form — a plain HTML post to One9x Forms, the form endpoint every
+// site on One9x Pages already has at /_one9x/. No JavaScript of ours, no API
+// key, no third party: the browser posts, the visitor lands on /thanks, and the
+// address shows up on the `waitlist` form's page in the dashboard.
+//
+// This is the markup the dashboard generates for a form named `waitlist` with
+// one required Email field named `email` and the captcha on. Two rules if you
+// change it:
+//   - `name="email"` is the contract. A field the dashboard does not know is
+//     refused, so renaming it here without renaming it there breaks every post.
+//   - Keep the `_gotcha` input, the <altcha-widget> (INSIDE the form) and the
+//     altcha.js script exactly as they are.
+//
+// It only works once deployed to Pages with Forms turned on — see the README.
+// Under `npm run dev` there is no /_one9x/: the spam check fails and nothing is
+// sent.
+interface Props {
+  /** Prefix for element ids, unique per form on the page. */
+  id: string;
+  button?: string;
+}
+
+const { id, button = 'Join the waitlist' } = Astro.props;
+---
+
+{/* Module scripts run once per URL, so two forms on a page load it once. */}
+<script is:inline type="module" src="/_one9x/altcha.js"></script>
+
+<form class="waitlist" action="/_one9x/forms/waitlist" method="POST">
+  <label class="sr-only" for={`${id}-email`}>Email address</label>
+  <input
+    id={`${id}-email`}
+    type="email"
+    name="email"
+    required
+    autocomplete="email"
+    placeholder="you@company.com"
+  />
+  {/* Where the visitor goes after a successful post. Same-site paths only. */}
+  <input type="hidden" name="_next" value="/thanks" />
+  {/* hidden trap: bots fill it, people don't */}
+  <input name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+  <altcha-widget auto="onsubmit" challenge="/_one9x/captcha/challenge"></altcha-widget>
+  <button class="btn">{button}</button>
+</form>
+
+<style>
+  .waitlist {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'email send' 'captcha captcha';
+    gap: 0.6rem;
+    max-width: 30rem;
+  }
+  input[type='email'] {
+    grid-area: email;
+    min-width: 0;
+    font: inherit;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.75rem 0.95rem;
+  }
+  input[type='email']::placeholder {
+    color: var(--muted);
+    opacity: 0.8;
+  }
+  input[type='email']:focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    outline-offset: 0;
+    border-color: var(--accent);
+  }
+  button {
+    grid-area: send;
+  }
+  altcha-widget {
+    grid-area: captcha;
+  }
+  @media (max-width: 480px) {
+    .waitlist {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'email' 'send' 'captcha';
+    }
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

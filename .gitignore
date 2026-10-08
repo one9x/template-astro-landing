@@ -1,0 +1,23 @@
+# Build output. NO TRAILING SLASHES, deliberately: `dist/` matches a directory
+# and not a SYMLINK named dist, which git stores as a file. Nuxt's generate
+# creates exactly that, and `git add -A` published it — a symlink whose target
+# was an absolute path on the machine that ran the build.
+node_modules
+dist
+build
+out
+_site
+.output
+.nuxt
+.svelte-kit
+.astro
+.next
+.vercel
+.netlify
+
+# Local
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example

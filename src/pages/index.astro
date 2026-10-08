@@ -1,0 +1,532 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import { SITE } from '../site';
+
+// Icon paths are 24×24, drawn with a 1.8 stroke in the accent colour.
+const features = [
+  {
+    title: 'Reads what you shipped',
+    body: 'Connects to your repo, your tracker and your calendar, and collects the week as it happened — merged work, closed tickets, decisions.',
+    icon: 'M4 6h16M4 12h10M4 18h6M17 15l3 3-3 3',
+  },
+  {
+    title: 'Drafts in your voice',
+    body: 'Learns from the last few updates you sent, so the draft sounds like your team and not like a press release.',
+    icon: 'M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4zM13.5 6.5l4 4',
+  },
+  {
+    title: 'You stay the editor',
+    body: 'Nothing is sent until you press send. Every line links back to the work it came from, so checking a claim takes one click.',
+    icon: 'M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3zM9 12l2 2 4-4',
+  },
+  {
+    title: 'Private by default',
+    body: 'Drafts are visible to the person who will send them and no one else. Disconnect a tool and what it shared is deleted.',
+    icon: 'M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5zM12 15v2',
+  },
+  {
+    title: 'Fits your week',
+    body: 'Friday afternoon, Monday morning, or every second Thursday. The draft is ready when you are, in your time zone.',
+    icon: 'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
+  },
+  {
+    title: 'Plain text out',
+    body: 'Copy it into chat, send it as email, or export Markdown. No viewer to log in to, no link that expires.',
+    icon: 'M8 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M14 4h6v6M20 4l-9 9',
+  },
+];
+
+const steps = [
+  {
+    title: 'Connect your tools',
+    body: 'Sign in to the tools your team already uses. Two minutes, read-only access.',
+  },
+  {
+    title: 'Review the draft',
+    body: 'At the time you pick, a draft is waiting: shipped, in progress, blocked. Cut, reorder, rewrite.',
+  },
+  {
+    title: 'Send it anywhere',
+    body: 'Post it to your team chat, email it to stakeholders, or paste it into your notes.',
+  },
+];
+
+const quotes = [
+  {
+    quote: 'A placeholder quote about the hour a week this gives back. Replace it with something a real person said.',
+    who: 'Name Surname',
+    role: 'Role, Example Co.',
+  },
+  {
+    quote: 'Another placeholder. Short, specific quotes beat long, general ones — keep the one that names a result.',
+    who: 'Name Surname',
+    role: 'Role, Example Co.',
+  },
+  {
+    quote: 'A third placeholder. No quotes yet? Delete this whole section — an empty one reads worse than none.',
+    who: 'Name Surname',
+    role: 'Role, Example Co.',
+  },
+];
+
+const faq = [
+  {
+    q: 'When can I use it?',
+    a: 'We are letting people in from the waitlist in small groups. Join, and you will get one email when your invite is ready.',
+  },
+  {
+    q: 'What happens to my email address?',
+    a: 'It is used to send you an invite and nothing else. It is never shared or sold. The privacy page has the details.',
+  },
+  {
+    q: 'Will it ever send an update without me?',
+    a: 'No. A draft stays a draft until you send it yourself. There is no auto-send setting, on purpose.',
+  },
+  {
+    q: 'Which tools does it connect to?',
+    a: 'The usual places a team ships from: code hosting, issue trackers and calendars. Tell us which ones you need when you join — it decides what we build next.',
+  },
+  {
+    q: 'Can I leave the waitlist?',
+    a: 'Yes. Reply to any email from us and ask, and your address is deleted.',
+  },
+];
+---
+
+<Layout nav>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Private beta · invites going out weekly</p>
+        <h1>{SITE.tagline}.</h1>
+        <p class="lede">
+          {SITE.name} reads what your team already shipped and drafts the weekly update for
+          you. You edit, you send. Nobody spends Friday afternoon reconstructing their week.
+        </p>
+        <WaitlistForm id="hero" />
+        <p class="fine">One email when your invite is ready. No newsletter.</p>
+      </div>
+
+      {/* Decorative: a sketch of the product, built from HTML so it stays sharp
+          and costs no image request. Swap in a real screenshot when you have one. */}
+      <figure class="mock" aria-hidden="true">
+        <div class="mock-bar"><span></span><span></span><span></span></div>
+        <div class="mock-body">
+          <p class="mock-kicker">Weekly update · Draft</p>
+          <p class="mock-title">Week 14 — Platform team</p>
+          <p class="mock-label">Shipped</p>
+          <ul>
+            <li>New checkout is live for every customer</li>
+            <li>Search results load in half the time</li>
+            <li>Fixed the export bug from last week's report</li>
+          </ul>
+          <p class="mock-label">In progress</p>
+          <ul>
+            <li>Team invites, behind a flag until Tuesday</li>
+          </ul>
+          <p class="mock-label">Blocked</p>
+          <ul>
+            <li>Billing migration waits on the vendor's sandbox</li>
+          </ul>
+          <div class="mock-actions"><span class="mock-btn">Send update</span><span class="mock-edit">Edit</span></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Everything the update needs, nothing it doesn't</h2>
+        <p>The work is already written down across your tools. {SITE.name} puts it in one place, in order, in plain words.</p>
+      </div>
+      <ul class="features">
+        {
+          features.map((f) => (
+            <li class="card">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d={f.icon} />
+              </svg>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="how" class="section sunk">
+    <div class="container">
+      <div class="section-head">
+        <h2>How it works</h2>
+        <p>Set it up once. After that, the update is something you read, not something you write.</p>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((s, i) => (
+            <li>
+              <span class="step-n" aria-hidden="true">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="quotes-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="quotes-h">From the private beta</h2>
+        {/* TEMPLATE NOTE — these are placeholders, and the page says so. */}
+        <p class="placeholder-note">Placeholder quotes: replace them with real ones, or delete this section.</p>
+      </div>
+      <ul class="quotes">
+        {
+          quotes.map((q) => (
+            <li class="card">
+              <blockquote>
+                <p>“{q.quote}”</p>
+              </blockquote>
+              <p class="who">
+                <span class="avatar" aria-hidden="true">{q.who.split(' ').map((w) => w[0]).join('')}</span>
+                <span>
+                  <strong>{q.who}</strong>
+                  <br />
+                  {q.role}
+                </span>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq" class="section sunk">
+    <div class="container faq-grid">
+      <div class="section-head">
+        <h2>Questions</h2>
+        <p>Something not covered here? Ask when you join — we read every reply.</p>
+      </div>
+      <div class="faq">
+        {
+          faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="waitlist" class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Get early access</h2>
+        <p>Join the waitlist and we will send one email when your invite is ready.</p>
+        <WaitlistForm id="cta" button="Request an invite" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding: clamp(3rem, 9vw, 6.5rem) 0 clamp(3rem, 8vw, 5rem);
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, var(--tint), transparent 70%),
+      var(--bg);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 3.9rem);
+    margin-top: 1.25rem;
+  }
+  .lede {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    margin: 1.25rem 0 2rem;
+    max-width: 34rem;
+  }
+  .fine {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .mock {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), 0 30px 60px -30px color-mix(in oklab, var(--accent) 35%, transparent);
+    overflow: hidden;
+    font-size: 0.9rem;
+  }
+  .mock-bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--sunk);
+  }
+  .mock-bar span {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .mock-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+  .mock-kicker {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--link);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mock-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 0.3rem;
+  }
+  .mock-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 1.1rem;
+  }
+  .mock ul {
+    margin: 0.4rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mock li {
+    position: relative;
+    padding: 0.3rem 0 0.3rem 1.2rem;
+  }
+  .mock li::before {
+    content: '';
+    position: absolute;
+    left: 0.15rem;
+    top: 0.85em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 2px;
+    background: var(--tint);
+    box-shadow: inset 0 0 0 1.5px var(--link);
+  }
+  .mock-actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .mock-btn,
+  .mock-edit {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+  }
+  .mock-btn {
+    background: var(--accent);
+    color: #fff;
+  }
+  .mock-edit {
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .sunk {
+    background: var(--sunk);
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+  }
+  .features,
+  .quotes,
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    /* Three across on a laptop, so six features are two full rows. */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  }
+  .icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0.55rem;
+    border-radius: 10px;
+    background: var(--tint);
+    fill: none;
+    stroke: var(--link);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin-top: 1.1rem;
+  }
+  .card p,
+  .steps p {
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-size: 0.98rem;
+  }
+
+  .steps li {
+    position: relative;
+    padding-top: 0.25rem;
+  }
+  .step-n {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .steps h3 {
+    font-size: 1.15rem;
+  }
+
+  .section-head .placeholder-note {
+    display: inline-block;
+    font-size: 0.9rem;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+  }
+  .quotes blockquote {
+    margin: 0;
+  }
+  .quotes blockquote p {
+    color: var(--text);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .card .who {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+  .who strong {
+    color: var(--text);
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--tint);
+    color: var(--link);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 2rem 4rem;
+    align-items: start;
+  }
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq details:first-child {
+    border-top: 1px solid var(--line);
+  }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: '+';
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--link);
+    transition: transform 0.2s;
+  }
+  .faq details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq details p {
+    color: var(--muted);
+    padding: 0 2rem 1.25rem 0;
+  }
+
+  .cta {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: clamp(2.5rem, 7vw, 4.5rem) 1.5rem;
+    border-radius: calc(var(--radius) * 1.5);
+    background:
+      radial-gradient(40rem 20rem at 50% 0%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+      var(--surface);
+    border: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+  }
+  .cta p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  .cta :global(.waitlist) {
+    width: 100%;
+    text-align: left;
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

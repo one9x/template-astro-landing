@@ -1,0 +1,54 @@
+name: Deploy to One9x Pages
+
+# Turn this on with two settings, both under the repo's Settings tab:
+#
+#   Variable  ONE9X_SITE   the site to deploy to (Secrets and variables ->
+#                          Actions -> Variables). Create the site first with
+#                          `one9x pages create <name>`.
+#   Secret    ONE9X_TOKEN  `one9x tokens create "github actions"`.
+#
+# Optional: variable SITE_URL, once you link a custom domain (see README).
+#
+# Until ONE9X_SITE exists the job is skipped rather than failed — a fresh
+# copy of a template should not open with a red X.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write      # only the preview comment needs this
+
+concurrency:
+  group: pages-${{ github.ref }}
+  # A superseded preview is worth cancelling; a live deploy is not.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  pages:
+    if: ${{ vars.ONE9X_SITE != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          # The address the site is served from, baked into canonical and
+          # social-card URLs. Defaults to the site's one9x.app host; set a
+          # SITE_URL repo variable once you link a custom domain.
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.one9x.app', vars.ONE9X_SITE) }}
+
+      - uses: one9x/pages-deploy@v1
+        with:
+          site: ${{ vars.ONE9X_SITE }}
+          dir: dist
+          error-pages: "404:/404.html"
+          token: ${{ secrets.ONE9X_TOKEN }}
+          deploy: ${{ github.ref == 'refs/heads/main' }}
+          comment: true
