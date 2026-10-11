@@ -75,8 +75,9 @@ the form once yourself after the first deploy and check it arrives.
 
 **What a visitor sees.** They press the button, the spam check solves in well
 under a second, and they land on `/thanks`. If the email is not valid they get
-a page saying which field was wrong. Forms are free on every plan; the limits
-(500 submissions per site per day, the newest 1,000 kept) are in the
+a page saying which field was wrong. Every plan includes a Forms plan — 250
+submissions a month on Free; over it, submissions are kept but locked until you
+upgrade or the month turns. The limits are in the
 [Forms docs](https://one9x.com/docs/widgets).
 
 **Before you turn it on**, a visitor can fill the form in but the submit fails
